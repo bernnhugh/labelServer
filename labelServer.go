@@ -11,8 +11,15 @@ import (
 
 var addr = flag.String("addr", "localhost:8080", "http service address")
 
-var upgrader = websocket.Upgrader{} // use default options
+//var upgrader = websocket.Upgrader{} // use default options
+var	upgrader  = websocket.Upgrader{
+        CheckOrigin: myOrigin, 
+	}
 
+func myOrigin(r *http.Request) bool {
+    //accept anything for now
+    return true
+}
 
 func echo(w http.ResponseWriter, r *http.Request) {
 	c, err := upgrader.Upgrade(w, r, nil)
